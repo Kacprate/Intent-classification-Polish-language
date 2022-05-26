@@ -1,11 +1,9 @@
 # Intent-classification-for-Polish-language
 A deep learning solution for intent classification problem for Polish language.
 
-MASSIVE dataset paper: https://arxiv.org/pdf/2204.08582.pdf
-
-HerBERT models on HuggingFace: https://huggingface.co/allegro
-
-Other models for Polish Language Understanding: https://github.com/ksopyla/awesome-nlp-polish#polish-transformer-models
+- MASSIVE dataset paper: https://arxiv.org/pdf/2204.08582.pdf
+- HerBERT models on HuggingFace: https://huggingface.co/allegro
+- Other models for Polish Language Understanding: https://github.com/ksopyla/awesome-nlp-polish#polish-transformer-models
 
 #### Tasks
 ##### 28 May 2022
