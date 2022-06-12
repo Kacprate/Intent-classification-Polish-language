@@ -5,7 +5,7 @@ model = RobertaModel.from_pretrained("allegro/herbert-klej-cased-v1", is_decoder
 
 encoded_input = tokenizer.encode("Kto ma lepszą sztukę, ma lepszy rząd – to jasne.", return_tensors="pt")
 print(encoded_input.shape)
-outputs = model.generate(encoded_input)
+outputs = model(encoded_input)
 
 # output = model(
 #     **tokenizer.batch_encode_plus(
