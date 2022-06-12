@@ -1,4 +1,3 @@
-from base64 import encode
 from transformers import HerbertTokenizer, RobertaModel
 
 tokenizer = HerbertTokenizer.from_pretrained("allegro/herbert-klej-cased-tokenizer-v1")
