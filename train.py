@@ -75,7 +75,7 @@ val_acc_list = []
 
 best_acc = 0.83
 
-for epoch_index in range(config.epoch_count):
+for epoch_index in range(1, config.epoch_count + 1):
     epoch_loss = 0
     val_epoch_loss = 0
     epoch_acc = 0
