@@ -138,7 +138,7 @@ for epoch_index in range(1, config.epoch_count + 1):
     acc_list.append(epoch_acc)
     val_acc_list.append(val_epoch_acc)
     
-    info_string = f'Epoch: {epoch_index}, train_loss: {epoch_loss:.4f}, val_loss: {val_epoch_loss:.4f}, epoch_acc: {epoch_acc:.4f}, val_acc: {val_epoch_acc:.4f}'
+    info_string = f'Epoch: {epoch_index}, train_loss: {epoch_loss:.4f}, val_loss: {val_epoch_loss:.4f}, train_acc: {epoch_acc:.4f}, val_acc: {val_epoch_acc:.4f}'
     print(info_string)
     
     with open(os.path.join(experiment_dir, 'log.txt'), mode='a') as f:
@@ -158,6 +158,7 @@ for epoch_index in range(1, config.epoch_count + 1):
         print(f'Saving checkpoint {checkpoint_path}')
         torch.save(intent_classifier.state_dict(), checkpoint_path)
         
+    plt.cla()
     plt.plot(loss_list)
     plt.savefig(f'{experiment_dir}/loss.png')
 
