@@ -73,7 +73,7 @@ val_loss_list = []
 acc_list = []
 val_acc_list = []
 
-best_acc = 0.0
+best_acc = 0.83
 
 for epoch_index in range(config.epoch_count):
     epoch_loss = 0
@@ -138,9 +138,6 @@ for epoch_index in range(config.epoch_count):
     acc_list.append(epoch_acc)
     val_acc_list.append(val_epoch_acc)
     
-    print(type(acc_list[0]))
-    print(type(loss_list[0]))
-
     info_string = f'Epoch: {epoch_index}, train_loss: {epoch_loss:.4f}, val_loss: {val_epoch_loss:.4f}, epoch_acc: {epoch_acc:.4f}, val_acc: {val_epoch_acc:.4f}'
     print(info_string)
     
