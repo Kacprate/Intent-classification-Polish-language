@@ -11,6 +11,7 @@ from transformers import HerbertTokenizer, RobertaModel
 from config import Config
 from datasets.massive import IntentDataset
 from models.intent_classifier import IntentClassifier
+import utils
 
 
 config = Config()
@@ -18,28 +19,23 @@ experiment_dir = os.path.abspath(f'./results/{config.experiment_name}')
 if not os.path.isdir(experiment_dir):
     os.mkdir(experiment_dir)
 shutil.copyfile('./config.py', f'{experiment_dir}/config.py')
+
+target_dir = os.path.join(experiment_dir, 'models')
+if not os.path.isdir(target_dir):
+    os.mkdir(target_dir)
+utils.copy_models('./models', target_dir)
+
 checkpoints_dir = os.path.join(experiment_dir, 'checkpoints')
 if not os.path.isdir(checkpoints_dir):
     os.mkdir(checkpoints_dir)
+    
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 tokenizer = HerbertTokenizer.from_pretrained(
     "allegro/herbert-klej-cased-tokenizer-v1")
 
-
-def collate_fn(data):
-    utterances, labels = zip(*data)
-    tokenizer_output = tokenizer.batch_encode_plus(
-        utterances,
-        padding="longest",
-        add_special_tokens=True,
-        return_tensors="pt",
-    )
-
-    labels = torch.tensor(labels)
-    return tokenizer_output, labels
-
+collate_fn = utils.collate_fn_factory(tokenizer)
 
 dataset = IntentDataset(path=config.dataset_path,
                         mode='train', random_seed=config.dataset_random_seed)

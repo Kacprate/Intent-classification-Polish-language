@@ -4,6 +4,7 @@ class IntentClassifier(nn.Module):
     def __init__(self, hidden_dim, output_dim) -> None:
         super().__init__()
         self.__classification_head = nn.Sequential(
+            nn.BatchNorm1d(hidden_dim),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(inplace=True),
             
@@ -11,6 +12,7 @@ class IntentClassifier(nn.Module):
             nn.Linear(hidden_dim, 256),
             nn.ReLU(inplace=True),
             
+            nn.BatchNorm1d(256),
             nn.Linear(256, 64),
             nn.ReLU(inplace=True),
             
