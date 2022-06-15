@@ -73,7 +73,7 @@ val_loss_list = []
 acc_list = []
 val_acc_list = []
 
-best_acc = 0.85
+best_acc = 0.0
 
 for epoch_index in range(config.epoch_count):
     epoch_loss = 0
@@ -141,17 +141,23 @@ for epoch_index in range(config.epoch_count):
     print(type(acc_list[0]))
     print(type(loss_list[0]))
 
-    print(
-        f'Epoch: {epoch_index}, train_loss: {epoch_loss:.4f}, val_loss: {val_epoch_loss:.4f}, epoch_acc: {epoch_acc:.4f}, val_acc: {val_epoch_acc:.4f}')
-
+    info_string = f'Epoch: {epoch_index}, train_loss: {epoch_loss:.4f}, val_loss: {val_epoch_loss:.4f}, epoch_acc: {epoch_acc:.4f}, val_acc: {val_epoch_acc:.4f}'
+    print(info_string)
+    
+    with open(os.path.join(experiment_dir, 'log.txt'), mode='a') as f:
+        f.write(f'{info_string}\n')
+    
     if val_epoch_acc > best_acc:
-        best_acc = val_epoch_acc
         checkpoint_path = os.path.join(experiment_dir, f'best.pt')
-        print('Saving model (better accuracy) {}')
+        print(f'Saving model (better accuracy {best_acc:.4f} -> {val_epoch_acc:.4f}) {checkpoint_path}')
+        torch.save(intent_classifier.state_dict(), checkpoint_path)
+        with open(os.path.join(experiment_dir, 'best_info.txt'), mode='w') as f:
+            f.write(info_string)
+        best_acc = val_epoch_acc
 
     if epoch_index % config.save_every == 0:
         checkpoint_path = os.path.join(
-            experiment_dir, 'checkpoints', f'checkpoint_intent_classifier_e_{epoch_index}_l_{val_epoch_acc:.4f}.pt')
+            experiment_dir, 'checkpoints', f'checkpoint_intent_classifier_E_{epoch_index}_L_{val_epoch_acc:.4f}.pt')
         print(f'Saving checkpoint {checkpoint_path}')
         torch.save(intent_classifier.state_dict(), checkpoint_path)
         
