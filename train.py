@@ -56,7 +56,7 @@ language_model = RobertaModel.from_pretrained(
 language_model = language_model.to(device)
 
 intent_classifier = IntentClassifier(
-    hidden_dim=768, output_dim=len(dataset.intents))
+    hidden_dim=768, output_dim=len(dataset.intents), device=device)
 intent_classifier = intent_classifier.to(device)
 
 optimizer = torch.optim.Adam(
@@ -89,7 +89,8 @@ for epoch_index in range(1, config.epoch_count + 1):
         with torch.no_grad():
             lm_outputs = language_model(**tokenizer_output)
         cls_hiddens = lm_outputs.pooler_output
-        intents_pred = intent_classifier(cls_hiddens)
+        hidden_state = lm_outputs.last_hidden_state.mean(dim=1)
+        intents_pred = intent_classifier(cls_hiddens, hidden_state, lm_outputs.last_hidden_state)
 
         loss = loss_func(intents_pred, labels_one_hot)
         epoch_loss += loss.item()
@@ -117,7 +118,8 @@ for epoch_index in range(1, config.epoch_count + 1):
 
             lm_outputs = language_model(**tokenizer_output)
             cls_hiddens = lm_outputs.pooler_output
-            intents_pred = intent_classifier(cls_hiddens)
+            hidden_state = lm_outputs.last_hidden_state.mean(dim=1)
+            intents_pred = intent_classifier(cls_hiddens, hidden_state, lm_outputs.last_hidden_state)
 
             intents_decoded = intents_pred.argmax(dim=1).cpu()
             accuracy = torch.sum(
