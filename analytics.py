@@ -37,7 +37,7 @@ class CSVHandler(DataHandler):
             self._logger.info("Loading data")
             csv_data = pd.read_csv(self._file_path, header=None)
         except Exception as e:
-            self.logger.error(e.what)
+            self._logger.error(e)
             raise e
         prediction_vector = csv_data.loc[:, :59].to_numpy()
         ground_truth_label = csv_data.loc[:, 60].to_numpy()
