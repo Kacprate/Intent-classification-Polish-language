@@ -13,3 +13,4 @@ MASSIVE: https://arxiv.org/pdf/2204.08582.pdf
 - `train.py` - train code
 - `test.py` - test code with csv export for further usage in the `analytics.py`
 - `analytics.py` - code that extracts interesting information about the trained model, it uses the csv file exported using `test.py` code
+- `models/best_model` - this folder contains the config and model definition for a training setting, that achieved ~86% validation accuracy
