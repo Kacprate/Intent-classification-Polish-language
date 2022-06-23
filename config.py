@@ -6,5 +6,5 @@ class Config():
     experiment_name = 'intent_classification_12'
     save_every = 25
     
-    dataset_path = './pl-PL.jsonl'
+    dataset_path = './data/pl-PL.jsonl'
     dataset_random_seed = 7
