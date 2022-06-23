@@ -150,7 +150,7 @@ def main():
     
     confusion_matrix_analytic = ConfusionMatrixAnalytic(data)
     confusion_matrix_analytic_output = confusion_matrix_analytic.evaluate()
-    # confusion_matrix_analytic_output.plot()
+    confusion_matrix_analytic_output.plot()
     
     classification_report_analytic = ClassificationReportAnalytic(data)
     classification_report_output = classification_report_analytic.evaluate()
